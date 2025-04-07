@@ -1,0 +1,55 @@
+Ex 1
+
+SELECT `users`.`username`, COUNT(`medias`.`type`) AS `video_count`
+FROM `users`
+INNER JOIN `medias`
+ON `users`.`id` = `medias`.`user_id`
+WHERE `medias`.`type` = "video"
+GROUP BY `username`;
+
+
+Ex 2
+
+SELECT `posts`.`title` AS `post_title`, `posts`.`date`, COUNT(`likes`.`user_id`) AS `likes_count`
+FROM `posts`
+LEFT JOIN `likes`
+ON `posts`.`id` = `likes`.`post_id`
+WHERE `likes`.`user_id` IS NULL
+GROUP BY `posts`.`title`, `posts`.`date`;
+
+
+Ex 3
+
+--- Senza JOIN ---
+
+SELECT COUNT(`user_id`) AS `like_count`
+FROM `likes`
+GROUP BY `post_id`;
+
+--- Con JOIN ---
+
+SELECT `posts`.`title` AS `post_title`, `posts`.`date` AS `post_date`, COUNT(`likes`.`date`) AS `like_count`
+FROM `posts`
+LEFT JOIN `likes`
+ON `posts`.`id` = `likes`.`post_id`
+GROUP BY `posts`.`title`, `posts`.`date`;
+
+
+Ex 4
+
+SELECT `users`.`username`, COUNT(`medias`.`id`) AS `media_count`
+FROM `users`
+INNER JOIN `medias`
+ON `users`.`id` = `medias`.`user_id`
+GROUP BY `users`.`username`
+ORDER BY COUNT(`medias`.`id`);
+
+
+Ex 5
+
+SELECT `users`.`username`, COUNT(`likes`.`user_id`) AS `total_likes`
+FROM `users`
+INNER JOIN `likes`
+ON `users`.`id` = `likes`.`user_id`
+GROUP BY `users`.`username`
+ORDER BY COUNT(`likes`.`user_id`);
